@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 
 namespace Snake.Animals {
 	public class Player : Animal {
@@ -24,6 +24,11 @@ namespace Snake.Animals {
 			} else if (Input.IsActionPressed("move_right")) {
 				_nextMovement = new Vector2(1, 0);
 			}
+		}
+
+		public void OnCollisionAreaAreaEntered(Object area) {
+			var other = area as Area2D;
+			other?.GetParent().QueueFree();
 		}
 	}
 }

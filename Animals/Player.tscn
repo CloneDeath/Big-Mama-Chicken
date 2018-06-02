@@ -14,4 +14,10 @@ texture = ExtResource( 3 )
 offset = Vector2( 0, -8.5 )
 _sections_unfolded = [ "Offset" ]
 
+[node name="CollisionArea" parent="." index="1"]
+
+_sections_unfolded = [ "Collision", "Visibility" ]
+
+[connection signal="area_entered" from="CollisionArea" to="." method="OnCollisionAreaAreaEntered"]
+
 
