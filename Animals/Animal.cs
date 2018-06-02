@@ -8,15 +8,19 @@ namespace Snake.Animals {
             QueueNextMovement();
         }
 
-        private static readonly Random _random = new Random();
+        private static readonly Random Random = new Random();
 
-        public void QueueNextMovement() {
+        public virtual void QueueNextMovement() {
             Move(GetNextMovement());
         }
 
         protected virtual Vector2 GetNextMovement() {
-            switch (_random.Next(4)) {
-                default: return new Vector2(1, 0); 
+            return GetRandomMovement();
+        }
+
+        protected static Vector2 GetRandomMovement() {
+            switch (Random.Next(4)) {
+                default: return new Vector2(1, 0);
                 case 1: return new Vector2(-1, 0);
                 case 2: return new Vector2(0, 1);
                 case 3: return new Vector2(0, -1);
@@ -31,8 +35,8 @@ namespace Snake.Animals {
         protected void Move(Vector2 direction) {
             var tween = new Tween();
             AddChild(tween);
-            tween.InterpolateProperty(this, "position", 
-                                      Position, Position + direction*150, 1, 
+            tween.InterpolateProperty(this, "position",
+                                      Position, Position + direction*150, 1,
                                       Tween.TransitionType.Cubic, Tween.EaseType.InOut);
             tween.InterpolateCallback(this, 1, nameof(QueueNextMovement));
             tween.InterpolateCallback(tween, 1, "queue_free");
